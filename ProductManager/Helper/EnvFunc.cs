@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
+using DotNetEnv;
 
 namespace ProductManager.Helper
 {
@@ -20,6 +21,18 @@ namespace ProductManager.Helper
             string rootDirectory = Directory.GetParent(Directory.GetParent(baseDirectory).FullName).FullName;
 
             return rootDirectory;
+        }
+
+        public static void LoadEnv()
+        {
+            // Nạp biến môi trường từ file .env với đường dẫn cụ thể
+            string envFilePath = getEnvFile();
+
+            // Kiểm tra file tồn tại trước khi nạp
+            if (File.Exists(envFilePath))
+            {
+                Env.Load(envFilePath);
+            }
         }
 
 
@@ -41,7 +54,7 @@ namespace ProductManager.Helper
             return Path.Combine(rootDirectory, fileName);
         }
 
-        public static void SaveConnectionInfoToEnv(string dbHost, string dbDatabase)
+        public async static Task SaveConnectionInfoToEnv(string dbHost, string dbDatabase)
         {
             string envFilePath = getEnvFile();
             var envContents = new List<string>();

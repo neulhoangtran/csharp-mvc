@@ -9,8 +9,10 @@ using ProductManager.Model;
 namespace ProductManager.Controller
 {
     public class ProductListController
+    
     {
         public readonly ProductList productList;
+        
 
         public ProductListController() {
             productList = new ProductList();
@@ -20,6 +22,15 @@ namespace ProductManager.Controller
             return await productList.FetchProduct();
         }
 
+        public async Task addNewProduct(string name , int qty, decimal price, string supplier)
+        {
+            Product product = new Product();
+            product.ProductName = name;
+            product.Quantity = qty;
+            product.Price = price;
+            product.Supplier = supplier;
+            await product.CreateNewProduct(product);
+        }
         //public async 
 
     }

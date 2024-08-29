@@ -191,7 +191,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ProductDetailController.cs" />
+    <Compile Include="Controller\ProductController.cs" />
     <Compile Include="Controller\ProductListController.cs" />
     <Compile Include="Controller\SetupController.cs" />
     <Compile Include="Entities\ProductInterface.cs" />
@@ -201,6 +201,12 @@
     </Compile>
     <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormAddProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormAddProduct.Designer.cs">
+      <DependentUpon>FormAddProduct.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormProductList.cs">
       <SubType>Form</SubType>
@@ -227,6 +233,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormAddProduct.resx">
+      <DependentUpon>FormAddProduct.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormProductList.resx">
       <DependentUpon>FormProductList.cs</DependentUpon>

@@ -61,12 +61,13 @@ namespace ProductManager
                     {
                         bool check = await setup.CreateRequireTablesAsync();
                         if (check) {
-                            EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
-                            this.Hide();
+                            await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
 
                             // Mở form mới (FormProductList)
                             FormProductList productListForm = new FormProductList();
                             productListForm.Show();
+                            //productListForm.ShowDialog();
+                            this.Hide();
                             this.Close();
                         } 
                     }
@@ -76,6 +77,11 @@ namespace ProductManager
                     }
                 }
             }
+        }
+
+        private void FormSetup_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

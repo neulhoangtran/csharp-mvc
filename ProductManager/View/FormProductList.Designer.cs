@@ -30,15 +30,16 @@
         {
             this.productListView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnAddProduct = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.productListView)).BeginInit();
             this.SuspendLayout();
             // 
             // productListView
             // 
             this.productListView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.productListView.Location = new System.Drawing.Point(58, 146);
+            this.productListView.Location = new System.Drawing.Point(69, 146);
             this.productListView.Name = "productListView";
-            this.productListView.Size = new System.Drawing.Size(670, 209);
+            this.productListView.Size = new System.Drawing.Size(659, 209);
             this.productListView.TabIndex = 0;
             // 
             // label1
@@ -52,15 +53,28 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Danh sách sản phẩm";
             // 
+            // btnAddProduct
+            // 
+            this.btnAddProduct.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddProduct.Location = new System.Drawing.Point(558, 392);
+            this.btnAddProduct.Name = "btnAddProduct";
+            this.btnAddProduct.Size = new System.Drawing.Size(170, 35);
+            this.btnAddProduct.TabIndex = 2;
+            this.btnAddProduct.Text = "Thêm sản phẩm";
+            this.btnAddProduct.UseVisualStyleBackColor = true;
+            this.btnAddProduct.Click += new System.EventHandler(this.btnAddProduct_Click);
+            // 
             // FormProductList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 464);
+            this.Controls.Add(this.btnAddProduct);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.productListView);
             this.Name = "FormProductList";
             this.Text = "Form2";
+            this.Activated += new System.EventHandler(this.FormProductList_Activated);
             this.Load += new System.EventHandler(this.FormProductList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productListView)).EndInit();
             this.ResumeLayout(false);
@@ -72,5 +86,6 @@
 
         private System.Windows.Forms.DataGridView productListView;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnAddProduct;
     }
 }

@@ -9,6 +9,7 @@ using DotNetEnv;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.Common;
+using ProductManager.Helper;
 
 namespace ProductManager.Model
 {
@@ -23,7 +24,7 @@ namespace ProductManager.Model
             try
             {
                 // load env
-                Env.Load();
+                EnvFunc.LoadEnv();
 
                 // check host and database , if not as a param will get from env
                 string dbHost = !string.IsNullOrEmpty(host) ? host : Env.GetString("DB_HOST");
@@ -108,6 +109,28 @@ namespace ProductManager.Model
             }
         }
 
+        // Method to execute non-query SQL commands asynchronously
+        public async Task<int> ExecuteNonQueryAsync(string query)
+        {
+            try
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    // Open connection if it's not already open
+                    if (conn.State != System.Data.ConnectionState.Open)
+                    {
+                        await conn.OpenAsync();
+                    }
+
+                    return await cmd.ExecuteNonQueryAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log or handle exceptions as needed
+                throw new Exception($"Error executing query: {ex.Message}", ex);
+            }
+        }
 
         public async Task<DataTable> FetchAsync (string tablename)
         {

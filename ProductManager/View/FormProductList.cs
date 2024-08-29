@@ -11,6 +11,7 @@ using ProductManager.Controller;
 using ProductManager.Helper;
 using System.Diagnostics;
 using ProductManager.Model;
+using ProductManager.View;
 
 namespace ProductManager
 {
@@ -18,27 +19,35 @@ namespace ProductManager
     {
 
         public ProductListController productListController;
+        public ProductController productController;
         public FormProductList()
         {
             InitializeComponent();
-            productListController = new ProductListController();  
+            productListController = new ProductListController();
+            productController = new ProductController();
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-
 
         private async void FormProductList_Load(object sender, EventArgs e)
         {
-            
+            await LoadProductDataAsync();
+        }
+
+        private async Task LoadProductDataAsync()
+        {
             DataTable products = await productListController.GetAllProductsAsync();
             productListView.DataSource = products;
-            // In dữ liệu DataTable lên console để debug
-            
+        }
+        private async void btnAddProduct_Click(object sender, EventArgs e)
+        {
+            //productController.CreateProduct();
+            FormAddProduct formAddProduct = new FormAddProduct();
+            formAddProduct.ShowDialog();
+            //await LoadProductDataAsync();
+        }
 
+        private async void FormProductList_Activated(object sender, EventArgs e)
+        {
+            await LoadProductDataAsync();
         }
     }
 }

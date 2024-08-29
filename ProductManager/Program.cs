@@ -33,10 +33,10 @@ namespace ProductManager
                 Application.Run(new FormProductList());
 
                 //LoadConfig();
-                bool checkDbConn = await InitialDbConnect();
-                if (!checkDbConn) {
-                    MessageBox.Show("Please check the connection to database", "Error");
-                } 
+                //bool checkDbConn = await InitialDbConnect();
+                //if (!checkDbConn) {
+                //    MessageBox.Show("Please check the connection to database", "Error");
+                //} 
             }
             else
             {
