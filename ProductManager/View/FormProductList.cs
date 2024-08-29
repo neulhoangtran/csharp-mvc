@@ -49,5 +49,22 @@ namespace ProductManager
         {
             await LoadProductDataAsync();
         }
+
+        private void btnEditProduct_Click(object sender, EventArgs e)
+        {
+            int productId;
+            productId = (int)productListView.CurrentRow.Cells[0].Value;
+            FormEditProduct formEditProduct = new FormEditProduct(productId);
+            formEditProduct.ShowDialog();
+
+        }
+
+        private void btnDeleteProduct_Click(object sender, EventArgs e)
+        {
+            int productId;
+            productId = (int)productListView.CurrentRow.Cells[0].Value;
+            FormDeleteProduct formDeleteProduct = new FormDeleteProduct(productId);
+            formDeleteProduct.ShowDialog();
+        }
     }
 }

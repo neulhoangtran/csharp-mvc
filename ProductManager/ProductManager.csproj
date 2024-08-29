@@ -202,6 +202,18 @@
     <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\FormDeleteProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormDeleteProduct.Designer.cs">
+      <DependentUpon>FormDeleteProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\FormEditProduct.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\FormEditProduct.Designer.cs">
+      <DependentUpon>FormEditProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\FormAddProduct.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -234,8 +246,14 @@
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\FormDeleteProduct.resx">
+      <DependentUpon>FormDeleteProduct.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\FormAddProduct.resx">
       <DependentUpon>FormAddProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\FormEditProduct.resx">
+      <DependentUpon>FormEditProduct.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormProductList.resx">
       <DependentUpon>FormProductList.cs</DependentUpon>
