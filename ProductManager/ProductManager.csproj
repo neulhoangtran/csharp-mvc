@@ -176,6 +176,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -191,39 +192,42 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\ProductController.cs" />
-    <Compile Include="Controller\ProductListController.cs" />
-    <Compile Include="Controller\SetupController.cs" />
+    <Compile Include="Controller\Product\ProductController.cs" />
+    <Compile Include="Controller\Product\ProductListController.cs" />
+    <Compile Include="Controller\Product\SetupController.cs" />
     <Compile Include="Entities\ProductInterface.cs" />
     <Compile Include="Entities\SqlConnectInterface.cs" />
+    <Compile Include="Entities\UserInterface.cs" />
+    <Compile Include="Model\Login\User.cs" />
+    <Compile Include="Model\Product\Setup.cs" />
     <Compile Include="View\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="View\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormDeleteProduct.cs">
+    <Compile Include="View\Product\FormDeleteProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormDeleteProduct.Designer.cs">
+    <Compile Include="View\Product\FormDeleteProduct.Designer.cs">
       <DependentUpon>FormDeleteProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormEditProduct.cs">
+    <Compile Include="View\Product\FormEditProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormEditProduct.Designer.cs">
+    <Compile Include="View\Product\FormEditProduct.Designer.cs">
       <DependentUpon>FormEditProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormAddProduct.cs">
+    <Compile Include="View\Product\FormAddProduct.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormAddProduct.Designer.cs">
+    <Compile Include="View\Product\FormAddProduct.Designer.cs">
       <DependentUpon>FormAddProduct.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\FormProductList.cs">
+    <Compile Include="View\Product\FormProductList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\FormProductList.Designer.cs">
+    <Compile Include="View\Product\FormProductList.Designer.cs">
       <DependentUpon>FormProductList.cs</DependentUpon>
     </Compile>
     <Compile Include="View\FormSetup.cs">
@@ -233,9 +237,9 @@
       <DependentUpon>FormSetup.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\EnvFunc.cs" />
-    <Compile Include="Model\Product.cs" />
-    <Compile Include="Model\ProductList.cs" />
-    <Compile Include="Model\SqlConnect.cs" />
+    <Compile Include="Model\Product\Product.cs" />
+    <Compile Include="Model\Product\ProductList.cs" />
+    <Compile Include="Model\Product\SqlConnect.cs" />
     <Compile Include="productDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,16 +250,16 @@
     <EmbeddedResource Include="View\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormDeleteProduct.resx">
+    <EmbeddedResource Include="View\Product\FormDeleteProduct.resx">
       <DependentUpon>FormDeleteProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormAddProduct.resx">
+    <EmbeddedResource Include="View\Product\FormAddProduct.resx">
       <DependentUpon>FormAddProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormEditProduct.resx">
+    <EmbeddedResource Include="View\Product\FormEditProduct.resx">
       <DependentUpon>FormEditProduct.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\FormProductList.resx">
+    <EmbeddedResource Include="View\Product\FormProductList.resx">
       <DependentUpon>FormProductList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\FormSetup.resx">
@@ -295,6 +299,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Controller\Login\" />
+    <Folder Include="View\Login\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

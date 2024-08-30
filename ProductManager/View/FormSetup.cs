@@ -24,63 +24,70 @@ namespace ProductManager
 
         private async void btnTestConnection_Click(object sender, EventArgs e)
         {
+            
             if (string.IsNullOrEmpty(txtServer.Text) || string.IsNullOrEmpty(txtDatabase.Text))
             {
-                MessageBox.Show("Missing Host or Database name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Thiếu host hoặc database name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tài khoản admin!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text, txtUser.Text, txtPassword.Text);
+            bool isConnected = await setup.TestConnectionAsync();
+            if (isConnected)
+            {
+                MessageBox.Show("Kết nối thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                using (SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text)) { 
-                    bool isConnected = await setup.TestConnectionAsync();
-                    if (isConnected)
-                    {
-                        MessageBox.Show("Kết nối thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return;
         }
 
 
         private async void btnCreateTable_Click(object sender, EventArgs e)
         {
+            
 
             if (string.IsNullOrEmpty(txtServer.Text) || string.IsNullOrEmpty(txtDatabase.Text))
             {
-                MessageBox.Show("Missing Host or Database name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Thiếu host hoặc database name!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPassword.Text))
+            {
+                MessageBox.Show("Vui lòng nhập tài khoản admin!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text, txtUser.Text, txtPassword.Text);
+            bool isConnected = await setup.TestConnectionAsync();
+            if (isConnected)
+            {
+                bool check = await setup.CreateRequireTablesAsync();
+                if (check)
+                {
+                    await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
+
+                    // Mở form mới (FormProductList)
+                    FormProductList productListForm = new FormProductList();
+                    productListForm.Show();
+                    //productListForm.ShowDialog();
+                    this.Hide();
+                    this.Close();
+                }
             }
             else
             {
-                using (SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text))
-                {
-                    bool isConnected = await setup.TestConnectionAsync();
-                    if (isConnected)
-                    {
-                        bool check = await setup.CreateRequireTablesAsync();
-                        if (check) {
-                            await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
-
-                            // Mở form mới (FormProductList)
-                            FormProductList productListForm = new FormProductList();
-                            productListForm.Show();
-                            //productListForm.ShowDialog();
-                            this.Hide();
-                            this.Close();
-                        } 
-                    }
-                    else
-                    {
-                        MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void FormSetup_Load(object sender, EventArgs e)
-        {
 
         }
     }
