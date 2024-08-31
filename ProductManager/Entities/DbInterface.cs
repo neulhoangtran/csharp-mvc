@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProductManager.Model.Login
+namespace ProductManager.Entities
 {
-    internal class User
+    public interface DbInterface
     {
+        Task<bool> SetupTable();
     }
 }

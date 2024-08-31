@@ -13,7 +13,7 @@ using ProductManager.Helper;
 
 namespace ProductManager.Model
 {
-    public class SqlConnect : SqlConnectInterface
+    public class SqlConnect : IDisposable
     {
         private readonly string sqlStr;
         private SqlConnection conn;
@@ -39,7 +39,9 @@ namespace ProductManager.Model
 
                 string initialConnectStr = $"Data Source= {dbHost}; Initial Catalog={dbDatabase}; Integrated Security = true";
                 conn = new SqlConnection(initialConnectStr);
-
+                //conn.OpenAsync();
+                //testConn = conn.State == ConnectionState.Open;
+                //await conn.OpenAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.Message);
@@ -55,12 +57,12 @@ namespace ProductManager.Model
         }
 
 
-        public async Task<bool> OpenAndTestConnectionAsync()
+        public async Task<bool> OpenConnectionAsync()
         {
             try
             {
                 await conn.OpenAsync();
-                testConn = conn.State  == ConnectionState.Open;
+                testConn = conn.State == ConnectionState.Open;
                 return testConn;
             }
             catch (Exception ex) {
@@ -139,7 +141,7 @@ namespace ProductManager.Model
             if (!testConn)
             {
                 //return null;
-                bool connected = await OpenAndTestConnectionAsync();
+                bool connected = await OpenConnectionAsync();
                 if (!connected)
                 {
                     //MessageBox.Show("Failed to open database connection.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

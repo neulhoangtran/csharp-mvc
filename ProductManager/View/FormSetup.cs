@@ -31,13 +31,7 @@ namespace ProductManager
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtUser.Text) || string.IsNullOrEmpty(txtPassword.Text))
-            {
-                MessageBox.Show("Vui lòng nhập tài khoản admin!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text, txtUser.Text, txtPassword.Text);
+            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text);
             bool isConnected = await setup.TestConnectionAsync();
             if (isConnected)
             {
@@ -53,7 +47,7 @@ namespace ProductManager
 
         private async void btnCreateTable_Click(object sender, EventArgs e)
         {
-            
+
 
             if (string.IsNullOrEmpty(txtServer.Text) || string.IsNullOrEmpty(txtDatabase.Text))
             {
@@ -67,27 +61,46 @@ namespace ProductManager
                 return;
             }
 
-            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text, txtUser.Text, txtPassword.Text);
+            SetupController setup = new SetupController(txtServer.Text, txtDatabase.Text);
             bool isConnected = await setup.TestConnectionAsync();
-            if (isConnected)
-            {
-                bool check = await setup.CreateRequireTablesAsync();
-                if (check)
-                {
-                    await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
 
-                    // Mở form mới (FormProductList)
-                    FormProductList productListForm = new FormProductList();
-                    productListForm.Show();
-                    //productListForm.ShowDialog();
-                    this.Hide();
-                    this.Close();
-                }
-            }
-            else
+            if (!isConnected)
             {
                 MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
             }
+
+            bool check = await setup.CreateRequireTablesAsync();
+            if (!check)
+            {
+                //MessageBox.Show("Kết nối thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+
+            }
+
+            //
+
+            UserController user = new UserController();
+            bool isCreatedAcc = await user.AddInitialUser(txtServer.Text, txtDatabase.Text, txtUser.Text, "", txtPassword.Text);
+
+            if (!isCreatedAcc) {
+                MessageBox.Show("Không thể tạo tài khoản admin", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            } 
+
+            await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
+
+            // Mở form mới (FormProductList)
+            FormProductList productListForm = new FormProductList();
+            productListForm.Show();
+
+            //productListForm.ShowDialog();
+            this.Hide();
+            this.Close();
+
+
+
 
         }
     }

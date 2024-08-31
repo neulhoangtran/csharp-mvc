@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,8 +19,19 @@ namespace ProductManager.Model
         public decimal Price { get; set; }
         public string Supplier { get; set; }
 
+        public async Task<DataTable> Fetch()
+        {
+            return null;
+        }
 
-        public async Task CreateNewProduct(Product product)
+        public async Task<DataTable> FetchProduct()
+        {
+            return null;
+            //return await _sqlConnect.FetchAsync("product");
+        }
+
+
+        public async Task<bool> Create(Product product)
         {
             try
             {
@@ -35,15 +47,17 @@ namespace ProductManager.Model
                     cmd.ExecuteNonQuery();
                     conn.GetConnection().Close();
                     //MessageBox.Show("Thêm sản phẩm thành công");
+                    return true;
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("Lỗi");
             }
+            return false;
         }
         
-        public async Task EditProduct(Product product)
+        public async Task<bool> Update(Product product)
         {
             try
             {
@@ -59,6 +73,7 @@ namespace ProductManager.Model
                     conn.GetConnection().Open();
                     cmd.ExecuteNonQuery();
                     conn.GetConnection().Close();
+                    return true;
                     //MessageBox.Show("Thêm sản phẩm thành công");
                 }
             }
@@ -66,10 +81,11 @@ namespace ProductManager.Model
             {
                 MessageBox.Show($"Lỗi {ex.Message}");
             }
+            return false;
         }
 
 
-        public async Task RemoveProduct(int productId)
+        public async Task<bool> Delete(int id)
         {
             try
             {
@@ -77,10 +93,11 @@ namespace ProductManager.Model
                 {
                     SqlCommand cmd = new SqlCommand("DeleteProduct", conn.GetConnection());
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Add(new SqlParameter("@ProductId", productId));
+                    cmd.Parameters.Add(new SqlParameter("@ProductId", id));
                     conn.GetConnection().Open();
                     cmd.ExecuteNonQuery();
                     conn.GetConnection().Close();
+                    return true;
                     //MessageBox.Show("Thêm sản phẩm thành công");
                 }
             }
@@ -88,6 +105,7 @@ namespace ProductManager.Model
             {
                 MessageBox.Show($"Lỗi {ex.Message}");
             }
+            return false;
         }
 
         public async Task<Product> GetProductById(int productId)
@@ -96,7 +114,7 @@ namespace ProductManager.Model
             {
                 using (SqlConnect conn = new SqlConnect())
                 {
-                    bool checkConn = await conn.OpenAndTestConnectionAsync();
+                    bool checkConn = await conn.OpenConnectionAsync();
                     if (checkConn)
                     {
                         string strQuery = $"SELECT * FROM product WHERE ProductId = @ProductId";

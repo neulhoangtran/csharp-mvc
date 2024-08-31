@@ -42,28 +42,7 @@ namespace ProductManager
             {
                 Application.Run(new FormSetup());
             }
-        }
-
-
-        public static async Task<bool> InitialDbConnect()
-        {
-            try
-            {
-                SqlConnect _sqlConn = new SqlConnect();
-                
-                    bool checkConn = await _sqlConn.OpenAndTestConnectionAsync();
-                    if (checkConn) {
-                        sqlConn = _sqlConn.GetConnection();
-                        return true;
-                    }
-                    return false;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-        
+        }      
 
         private static void LoadConfig()
         {

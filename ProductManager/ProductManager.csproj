@@ -193,13 +193,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\Product\ProductController.cs" />
-    <Compile Include="Controller\Product\ProductListController.cs" />
-    <Compile Include="Controller\Product\SetupController.cs" />
+    <Compile Include="Controller\SetupController.cs" />
+    <Compile Include="Controller\User\UserController.cs" />
+    <Compile Include="Entities\DbInterface.cs" />
     <Compile Include="Entities\ProductInterface.cs" />
-    <Compile Include="Entities\SqlConnectInterface.cs" />
     <Compile Include="Entities\UserInterface.cs" />
-    <Compile Include="Model\Login\User.cs" />
-    <Compile Include="Model\Product\Setup.cs" />
+    <Compile Include="Model\SetupDb\CreateProductTable.cs" />
+    <Compile Include="Model\SetupDb\CreateUserTable.cs" />
+    <Compile Include="Model\User\User.cs" />
+    <Compile Include="Model\Setup.cs" />
     <Compile Include="View\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,8 +240,7 @@
     </Compile>
     <Compile Include="Helper\EnvFunc.cs" />
     <Compile Include="Model\Product\Product.cs" />
-    <Compile Include="Model\Product\ProductList.cs" />
-    <Compile Include="Model\Product\SqlConnect.cs" />
+    <Compile Include="Model\SqlConnect.cs" />
     <Compile Include="productDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -300,7 +301,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controller\Login\" />
     <Folder Include="View\Login\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

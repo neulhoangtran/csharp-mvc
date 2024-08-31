@@ -18,12 +18,10 @@ namespace ProductManager
     public partial class FormProductList : Form
     {
 
-        public ProductListController productListController;
         public ProductController productController;
         public FormProductList()
         {
             InitializeComponent();
-            productListController = new ProductListController();
             productController = new ProductController();
         }
 
@@ -34,7 +32,7 @@ namespace ProductManager
 
         private async Task LoadProductDataAsync()
         {
-            DataTable products = await productListController.GetAllProductsAsync();
+            DataTable products = await productController.GetAllProductsAsync();
             productListView.DataSource = products;
         }
         private async void btnAddProduct_Click(object sender, EventArgs e)
@@ -65,6 +63,11 @@ namespace ProductManager
             productId = (int)productListView.CurrentRow.Cells[0].Value;
             FormDeleteProduct formDeleteProduct = new FormDeleteProduct(productId);
             formDeleteProduct.ShowDialog();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

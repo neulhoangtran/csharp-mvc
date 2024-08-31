@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,31 +24,41 @@ namespace ProductManager.Controller
         //    //MessageBox.Show("Tessttttttttttttttt-----");
         //}
 
+        public Product product;
+
+        public ProductController() {
+            product = new Product();
+        }  
+
+        public async Task<DataTable> GetAllProductsAsync()
+        {
+            return await product.FetchProduct();
+        }
+
         public async Task addNewProduct(string name, int qty, decimal price, string supplier)
         {
-            Product product = new Product();
+            
             product.ProductName = name;
             product.Quantity = qty;
             product.Price = price;
             product.Supplier = supplier;
-            await product.CreateNewProduct(product);
+            await product.Create(product);
         }
         
         public async Task EditProduct(int productId, string name, int qty, decimal price, string supplier)
         {
-            Product product = new Product();
+         
             product.ProductName = name;
             product.ProductId = productId;
             product.Quantity = qty;
             product.Price = price;
             product.Supplier = supplier;
-            await product.EditProduct(product);
+            await product.Update(product);
         }
 
         public async Task RemoveProduct(int productId)
         {
-            Product product = new Product();
-            await product.RemoveProduct(productId);
+            await product.Delete(productId);
         }
 
         public async Task<Product> GetProductById(int productId) {
