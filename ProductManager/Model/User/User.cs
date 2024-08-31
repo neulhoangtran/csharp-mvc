@@ -42,15 +42,34 @@ namespace ProductManager.Model
         public async Task<bool> AddInitialUser(string host, string db, User user)
         {
             try
+
             {
+
                 using (SqlConnect conn = new SqlConnect(host, db))
                 {
+
+                    await conn.OpenConnectionAsync();
+
+                    // Check if the username already exists
+                    string checkUserQuery = "SELECT COUNT(*) FROM [Users] WHERE UserName = @UserName";
+                    using (SqlCommand checkCmd = new SqlCommand(checkUserQuery, conn.GetConnection()))
+                    {
+                        checkCmd.Parameters.Add(new SqlParameter("@UserName", user.UserName));
+                        int userCount = (int)await checkCmd.ExecuteScalarAsync();
+
+                        if (userCount > 0)
+                        {
+                            MessageBox.Show("UserName đã tồn tại, hãy tạo tài khoản khác", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return false;
+                        }
+                    }
+
                     SqlCommand cmd = new SqlCommand("CreateUser", conn.GetConnection());
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Add(new SqlParameter("@UserName", user.UserName));
                     cmd.Parameters.Add(new SqlParameter("@Email", user.Email));
                     cmd.Parameters.Add(new SqlParameter("@Password", user.Password));
-                    await conn.OpenConnectionAsync();
+                    //await conn.OpenConnectionAsync();
                     await cmd.ExecuteNonQueryAsync();
                     conn.GetConnection().Close();
                     return true;

@@ -54,54 +54,66 @@ namespace ProductManager.Helper
             return Path.Combine(rootDirectory, fileName);
         }
 
-        public async static Task SaveConnectionInfoToEnv(string dbHost, string dbDatabase)
+        public async static Task<bool> SaveConnectionInfoToEnv(string dbHost, string dbDatabase)
         {
-            string envFilePath = getEnvFile();
-            var envContents = new List<string>();
-
-            // Đọc nội dung hiện tại của file .env nếu tồn tại
-            if (File.Exists(envFilePath))
+            try
             {
-                envContents = File.ReadAllLines(envFilePath).ToList();
-            }
 
-            // Kiểm tra và cập nhật hoặc thêm DB_HOST
-            bool dbHostExists = false;
-            for (int i = 0; i < envContents.Count; i++)
-            {
-                if (envContents[i].StartsWith("DB_HOST="))
+                string envFilePath = getEnvFile();
+                var envContents = new List<string>();
+
+                // Đọc nội dung hiện tại của file .env nếu tồn tại
+                if (File.Exists(envFilePath))
                 {
-                    envContents[i] = $"DB_HOST={dbHost}";
-                    dbHostExists = true;
-                    break;
+                    envContents = File.ReadAllLines(envFilePath).ToList();
                 }
-            }
-            if (!dbHostExists)
-            {
-                envContents.Add($"DB_HOST={dbHost}");
-            }
 
-            // Kiểm tra và cập nhật hoặc thêm DB_DATABASE
-            bool dbDatabaseExists = false;
-            for (int i = 0; i < envContents.Count; i++)
-            {
-                if (envContents[i].StartsWith("DB_DATABASE="))
+                // Kiểm tra và cập nhật hoặc thêm DB_HOST
+                bool dbHostExists = false;
+                for (int i = 0; i < envContents.Count; i++)
                 {
-                    envContents[i] = $"DB_DATABASE={dbDatabase}";
-                    dbDatabaseExists = true;
-                    break;
+                    if (envContents[i].StartsWith("DB_HOST="))
+                    {
+                        envContents[i] = $"DB_HOST={dbHost}";
+                        dbHostExists = true;
+                        break;
+                    }
                 }
+                if (!dbHostExists)
+                {
+                    envContents.Add($"DB_HOST={dbHost}");
+                }
+
+                // Kiểm tra và cập nhật hoặc thêm DB_DATABASE
+                bool dbDatabaseExists = false;
+                for (int i = 0; i < envContents.Count; i++)
+                {
+                    if (envContents[i].StartsWith("DB_DATABASE="))
+                    {
+                        envContents[i] = $"DB_DATABASE={dbDatabase}";
+                        dbDatabaseExists = true;
+                        break;
+                    }
+                }
+                if (!dbDatabaseExists)
+                {
+                    envContents.Add($"DB_DATABASE={dbDatabase}");
+                }
+
+                //MessageBox.Show(envFilePath);
+                //MessageBox.Show(string.Join(Environment.NewLine, envContents));
+
+                // Ghi lại nội dung vào file .env
+                File.WriteAllLines(envFilePath, envContents);
+
+                return true;
+
             }
-            if (!dbDatabaseExists)
+            catch (Exception)
             {
-                envContents.Add($"DB_DATABASE={dbDatabase}");
+
+                return false;
             }
-
-            //MessageBox.Show(envFilePath);
-            //MessageBox.Show(string.Join(Environment.NewLine, envContents));
-
-            // Ghi lại nội dung vào file .env
-            File.WriteAllLines(envFilePath, envContents);
         }
 
     }

@@ -89,19 +89,22 @@ namespace ProductManager
                 return;
             } 
 
-            await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
+            bool envCheck = await EnvFunc.SaveConnectionInfoToEnv(txtServer.Text, txtDatabase.Text);
 
-            // Mở form mới (FormProductList)
-            FormProductList productListForm = new FormProductList();
-            productListForm.Show();
+            if (envCheck) {
+                // Mở form mới (FormProductList)
+                FormProductList productListForm = new FormProductList();
+                productListForm.Show();
 
-            //productListForm.ShowDialog();
-            this.Hide();
-            this.Close();
+                //productListForm.ShowDialog();
+                this.Hide();
+                this.Close();
+            } else
+            {
+                MessageBox.Show("Không thể lưu file env", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
 
-
-
-
+            }
         }
     }
 }
